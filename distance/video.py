@@ -68,7 +68,8 @@ class VideoCamera(object):
         if self.recordingThread != None:
             self.recordingThread.stop()
 
-
+    def release(self):
+        pass
 
 # import time
 

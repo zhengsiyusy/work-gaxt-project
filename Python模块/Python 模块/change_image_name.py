@@ -6,10 +6,10 @@ import os.path
 import numpy as np
 # 末尾斜杠不要丢，你的文件存放位置
 # rootdir = r"D:\YOLOV5\VOC2007\JPEGImages/"
-rootdir = r"C:\Users\Dell\Desktop\frame\22/"
+rootdir = r"C:\Users\Dell\Desktop\brick/"
 files = os.listdir(rootdir)
 # 可更改起始序号
-b = 0
+b = 106
 for name in files:
     a = os.path.splitext(name)
     print(a[0])

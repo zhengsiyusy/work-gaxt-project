@@ -8,6 +8,7 @@ from model_output_merge import modelprocess, draw_recognize_result
 # import matlab_calibrateCamera as camera_configs
 import video
 
+
 def get_hw(pro):
     if pro.layout == "NCHW":
         return pro.shape[2], pro.shape[3]

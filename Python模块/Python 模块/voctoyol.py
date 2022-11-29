@@ -10,8 +10,9 @@ from shutil import copyfile
 
 # classes = ["face"]
 # classes = ["bjjkb", "hs_0", "hs_1", "hs_2", "hs_3", "hs_other"]
-classes = ["QR_code", "xck", "hs_24", "hs_48", "hs_72", "hs_4", "hs_5", "hs_other"]
-
+# classes = ["QR_code", "xck", "hs_24", "hs_48", "hs_72", "hs_4", "hs_5", "hs_other"]
+classes = ["brick"]
+# classes = ["bjjkb", "bjjkb_o", "hs_0", "hs_1", "hs_2", "hs_3", "hs_other"]
 # classes=["ball"]
 
 TRAIN_RATIO = 80

@@ -11,14 +11,47 @@ import math
 classes_name_path = 'coco_classes.names'
 colors = [(255, 255, 0), (0, 255, 0), (0, 255, 255), (255, 0, 0)]
 
-# 单应性矩阵求解
-# 相机固定好的情况下采集的点对   Four corners of the book in destination image.
 pts_src = np.array([[43.501, 448.510, 1], [245.501, 27.500, 1], [416.500, 29.497, 1], [602.499, 447.488, 1]])
 # 虚拟坐标系下对应点对
 pts_dst = np.array([[-45, 42, 1], [-45, 286, 1], [45, 286, 1], [45, 42, 1]])
-# Calculate Homography h是变换矩阵 status是掩码
-h, status = cv2.findHomography(pts_src, pts_dst, method=cv2.RANSAC, ransacReprojThreshold=1)
-# print("h", h)
+
+# 读取转换矩阵
+# def read_matrix_cfg():
+#     new_matrix = []
+#     with open('matrix_config.cfg', 'r') as cfg:
+#         cfg_data = cfg.readlines()
+#         for i in range(len(cfg_data)):
+#             temp = cfg_data[i].replace('\n', '')
+#             new_matrix.append(temp)
+#         np_arr = np.array(new_matrix)
+#         matrix_float = np_arr.astype(np.float64)
+#         matrix = matrix_float.reshape(3, 3)
+#         print(matrix)
+#     cfg.close()
+#     return matrix
+
+
+# 读取坐标信息
+def read_matrix_cfg():
+    new_matrix = []
+    with open('matrix_config.cfg', 'r') as cfg:
+        matrix = cfg.readlines()
+        for i in range(len(matrix)):
+            temp = matrix[i].replace('\n', '')
+            new_matrix.append(temp)
+        src = np.array(new_matrix[:8])
+        dst = np.array(new_matrix[8:16])
+        src = src.astype(np.float64)
+        dst = dst.astype(np.float64)
+        for i in range(4):
+            src = np.insert(src, ((2 * i) + 2 + i * 1), [1])
+            dst = np.insert(dst, ((2 * i) + 2 + i * 1), [1])
+        pts_src = src.reshape(4, 3)
+        pts_dst = dst.reshape(4, 3)
+        matrix, status = cv2.findHomography(pts_src, pts_dst, method=cv2.RANSAC, ransacReprojThreshold=1)
+        print("matrix", matrix)
+    cfg.close()
+    return matrix
 
 
 def yolov5_decoder(conv_output, num_anchors, num_classes, anchors, stride):
@@ -92,6 +125,8 @@ def modelprocess(model_output):
 
 
 def draw_recognize_result(frame, class_ids, confidences, boxes, fps):
+    # 读取配置文件中的单应性变换矩阵
+    h = read_matrix_cfg()
     unit_distance = 1.0  # 单位长度cm，栅格坐标下1个单位为1cm
     with open(classes_name_path, "r") as f:
         class_list = [cname.strip() for cname in f.readlines()]
