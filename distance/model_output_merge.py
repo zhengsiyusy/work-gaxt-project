@@ -37,19 +37,25 @@ def read_matrix_cfg():
     with open('matrix_config.cfg', 'r') as cfg:
         matrix = cfg.readlines()
         for i in range(len(matrix)):
+            # 替换掉"\n"
             temp = matrix[i].replace('\n', '')
             new_matrix.append(temp)
+        # 获取列表前8个数
         src = np.array(new_matrix[:8])
+        # 获取列表后8个数
         dst = np.array(new_matrix[8:16])
+        # 字符串转换为
         src = src.astype(np.float64)
         dst = dst.astype(np.float64)
         for i in range(4):
+            # 在每一个坐标点末尾添加1
             src = np.insert(src, ((2 * i) + 2 + i * 1), [1])
             dst = np.insert(dst, ((2 * i) + 2 + i * 1), [1])
+        # 转换为4行3列列表
         pts_src = src.reshape(4, 3)
         pts_dst = dst.reshape(4, 3)
+        # 求解转换矩阵
         matrix, status = cv2.findHomography(pts_src, pts_dst, method=cv2.RANSAC, ransacReprojThreshold=1)
-        print("matrix", matrix)
     cfg.close()
     return matrix
 
