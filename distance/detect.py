@@ -94,7 +94,8 @@ if __name__ == '__main__':
                 break
         # except TypeError: 
         #     print("nothing found")
-        # cv2.imshow("result", imgOri) 
+        # cv2.imshow("result", imgOri)
+        # cv2.waitKey(1)        
         
     camera.release()
     cv2.destroyAllWindows()
