@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # file:model_output_merge.py
-# 
+#
+import os
 import cv2
 import numpy as np
 import math
@@ -15,52 +16,43 @@ pts_src = np.array([[43.501, 448.510, 1], [245.501, 27.500, 1], [416.500, 29.497
 # 虚拟坐标系下对应点对
 pts_dst = np.array([[-45, 42, 1], [-45, 286, 1], [45, 286, 1], [45, 42, 1]])
 
-# 读取转换矩阵
-# def read_matrix_cfg():
-#     new_matrix = []
-#     with open('matrix_config.cfg', 'r') as cfg:
-#         cfg_data = cfg.readlines()
-#         for i in range(len(cfg_data)):
-#             temp = cfg_data[i].replace('\n', '')
-#             new_matrix.append(temp)
-#         np_arr = np.array(new_matrix)
-#         matrix_float = np_arr.astype(np.float64)
-#         matrix = matrix_float.reshape(3, 3)
-#         print(matrix)
-#     cfg.close()
-#     return matrix
-
 
 # 读取坐标信息
 def read_matrix_cfg():
- # 当前路径下
+    # 当前路径下
     path = './'
-    path_list=os.listdir(path)
+    path_list = os.listdir(path)
     for filename in path_list:
         if os.path.splitext(filename)[1] == '.cfg':
             new_matrix = []
-            with open('matrix_config.cfg', 'r') as cfg:
+            with open(filename, 'r') as cfg:
                 matrix = cfg.readlines()
+                print("ma", matrix)
                 for i in range(len(matrix)):
                     # 替换掉"\n"
                     temp = matrix[i].replace('\n', '')
                     new_matrix.append(temp)
-                # 获取列表前8个数
-                src = np.array(new_matrix[:8])
-                # 获取列表后8个数
-                dst = np.array(new_matrix[8:16])
-                # 字符串转换为
+                # 计算点数
+                point_num = int(len(new_matrix) / 4)
+                print('len', point_num)
+                # 获取列表前16个数
+                src = np.array(new_matrix[:16])
+                # 获取列表后16个数
+                dst = np.array(new_matrix[16:32])
+                # 字符串转换为float64
                 src = src.astype(np.float64)
                 dst = dst.astype(np.float64)
-                for i in range(4):
+                print("11", src, dst)
+                for i in range(point_num):
                     # 在每一个坐标点末尾添加1
                     src = np.insert(src, ((2 * i) + 2 + i * 1), [1])
                     dst = np.insert(dst, ((2 * i) + 2 + i * 1), [1])
                 # 转换为4行3列列表
-                pts_src = src.reshape(4, 3)
-                pts_dst = dst.reshape(4, 3)
+                pts_src = src.reshape(point_num, 3)
+                pts_dst = dst.reshape(point_num, 3)
                 # 求解转换矩阵
                 matrix, status = cv2.findHomography(pts_src, pts_dst, method=cv2.RANSAC, ransacReprojThreshold=1)
+                print("matrix", matrix)
             cfg.close()
     return matrix
 
