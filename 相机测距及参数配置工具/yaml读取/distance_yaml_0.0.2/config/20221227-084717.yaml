@@ -1,0 +1,45 @@
+Code_Version: 0.0.2
+Python_Version: 3.9.12
+camera_type: PC Camera
+image size: 640 * 480
+furthest_distance:
+  d_camera_angle: 75.0
+  d_camera_distance: 37.32
+  d_camera_height: 10.0
+camera_angle:
+  a_camera_angle: 21.8
+  a_camera_distance: 4.0
+  a_camera_height: 10.0
+position:
+  c1_x: 170.47
+  c1_y: 41.03
+  c2_x: 109.5
+  c2_y: 118.24
+  c3_x: 31.5
+  c3_y: 451.49
+  c4_x: 334.0
+  c4_y: 452.48
+  c5_x: 55.0
+  c5_y: 458.47
+  c6_x: 581.54
+  c6_y: 118.31
+  c7_x: 519.96
+  c7_y: 39.52
+  c8_x: 344.47
+  c8_y: 33.47
+  p1_u: -80.0
+  p1_v: 240.0
+  p2_u: -80.0
+  p2_v: 160.0
+  p3_u: -50.0
+  p3_v: 40.0
+  p4_u: 0.0
+  p4_v: 40.0
+  p5_u: 45.0
+  p5_v: 40.0
+  p6_u: 80.0
+  p6_v: 160.0
+  p7_u: 80.0
+  p7_v: 240.0
+  p8_u: 0.0
+  p8_v: 240.0

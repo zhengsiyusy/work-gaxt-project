@@ -1,0 +1,7 @@
+setup.py
+./pyyolotools.pyx
+./yolov5postprocess.cpp
+pyyolotools.egg-info/PKG-INFO
+pyyolotools.egg-info/SOURCES.txt
+pyyolotools.egg-info/dependency_links.txt
+pyyolotools.egg-info/top_level.txt
